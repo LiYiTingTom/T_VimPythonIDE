@@ -45,10 +45,6 @@ endif
 " want to use
 call plug#begin("~/.config/nvim/plugged")
 
-" Now the actual plugins:
-
-" python: jupynb binding
-Plug 'hanschen/vim-ipython-cell'
 
 " editor: Folding
 Plug 'tmhedberg/SimpylFold'
@@ -58,6 +54,25 @@ Plug 'tpope/vim-commentary'
 Plug 'junegunn/vim-easy-align'
 " editor: todo list
 Plug 'fisadev/FixedTaskList.vim'
+" editor: indentLine
+Plug 'Yggdroot/indentLine'
+" editor: change reativenumber 0 to current line number
+Plug 'myusuf3/numbers.vim'
+" editor: Automatically close parenthesis, etc
+Plug 'Townk/vim-autoclose'
+" editor: Surround
+Plug 'tpope/vim-surround'
+" editor: Indentation based movements
+Plug 'jeetsukumaran/vim-indentwise'
+" editor: Paint css colors with the real color
+Plug 'lilydjwg/colorizer'
+" editor: Highlight matching html tags
+Plug 'valloric/MatchTagAlways'
+" editor: Generate html in a simple way
+Plug 'mattn/emmet-vim'
+" editro: Completion from other opened files
+Plug 'Shougo/context_filetype.vim'
+
 
 " util: NERDTree
 Plug 'scrooloose/nerdtree'
@@ -70,67 +85,37 @@ Plug 'arielrossanigo/dir-configs-override.vim'
 " util: fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+" util: git signify color
+Plug 'mhinz/vim-signify'
+" util: language packets
+Plug 'sheerun/vim-polyglot'
+" util: Git integration
+Plug 'tpope/vim-fugitive'
+" util: Ack code search (requires ack installed in the system)
+Plug 'mileszs/ack.vim'
+
 
 " appearance: vim-monokai-tasty
 Plug 'patstockwell/vim-monokai-tasty'
 " appearance: Airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+" appearance: icons
+Plug 'ryanoasis/vim-devicons'
 
 
 " Async autocompletion
-if using_neovim && vim_plug_just_installed
-    Plug 'Shougo/deoplete.nvim', {'do': ':autocmd VimEnter * UpdateRemotePlugins'}
-else
-    Plug 'Shougo/deoplete.nvim'
-endif
+Plug 'Shougo/deoplete.nvim', {'do': ':autocmd VimEnter * UpdateRemotePlugins'}
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
 
-" Python autocompletion
+" python: autocompletion
 Plug 'deoplete-plugins/deoplete-jedi'
-" Completion from other opened files
-Plug 'Shougo/context_filetype.vim'
-" Just to add the python go-to-definition and similar features, autocompletion
-" from this plugin is disabled
+" python: jupynb binding
+Plug 'hanschen/vim-ipython-cell'
+" python: jedi goto, ...
 Plug 'davidhalter/jedi-vim'
-" Automatically close parenthesis, etc
-Plug 'Townk/vim-autoclose'
-" Surround
-Plug 'tpope/vim-surround'
-" indentLine
-Plug 'Yggdroot/indentLine'
-" Indentation based movements
-Plug 'jeetsukumaran/vim-indentwise'
-" Better language packs
-Plug 'sheerun/vim-polyglot'
-" Ack code search (requires ack installed in the system)
-Plug 'mileszs/ack.vim'
-" Paint css colors with the real color
-Plug 'lilydjwg/colorizer'
-" Highlight matching html tags
-Plug 'valloric/MatchTagAlways'
-" Generate html in a simple way
-Plug 'mattn/emmet-vim'
-" Git integration
-Plug 'tpope/vim-fugitive'
-" Git/mercurial/others diff icons on the side of the file lines
-Plug 'mhinz/vim-signify'
-" Relative numbering of lines (0 is the current line)
-" (disabled by default because is very intrusive and can't be easily toggled
-" on/off. When the plugin is present, will always activate the relative
-" numbering every time you go to normal mode. Author refuses to add a setting
-" to avoid that)
-Plug 'myusuf3/numbers.vim'
-" Nice icons in the file explorer and file type status line.
-Plug 'ryanoasis/vim-devicons'
 
-" Code searcher. If you enable it, you should also configure g:hound_base_url 
-" and g:hound_port, pointing to your hound instance
-" Plug 'mattn/webapi-vim'
-" Plug 'jfo/hound.vim'
-
-" Tell vim-plug we finished declaring plugins, so it can load them
 call plug#end()
 
 " ============================================================================
@@ -220,21 +205,6 @@ let g:context_filetype#same_filetypes._ = '_'
 
 
 
-" ========================= Jedi-vim  =========================
-" Disable autocompletion (using deoplete instead)
-let g:jedi#completions_enabled = 0
-" All these mappings work only for python code:
-" Go to definition
-let g:jedi#goto_command = ',d'
-" Find ocurrences
-let g:jedi#usages_command = ',o'
-" Find assignments
-let g:jedi#goto_assignments_command = ',a'
-" Go to definition in new tab
-nmap ,D :tab split<CR>:call jedi#goto()<CR>
-
-
-
 " ========================== Ack.vim ==========================
 " mappings
 nmap ,r :Ack 
@@ -268,11 +238,7 @@ let g:AutoClosePumvisible = {"ENTER": "\<C-Y>", "ESC": "\<ESC>"}
 
 
 " ========= Include user's custom nvim configurations =========
-if using_neovim
-    let custom_configs_path = "~/.config/nvim/custom.vim"
-else
-    let custom_configs_path = "~/.vim/custom.vim"
-endif
+let custom_configs_path = "~/.config/nvim/custom.vim"
 
 if filereadable(expand(custom_configs_path))
   execute "source " . custom_configs_path
