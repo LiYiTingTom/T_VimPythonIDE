@@ -17,22 +17,13 @@ let using_vim = !using_neovim
 " Avoid modifying this section, unless you are very sure of what you are doing
 
 let vim_plug_just_installed = 0
-if using_neovim
-    let vim_plug_path = expand('~/.config/nvim/autoload/plug.vim')
-else
-    let vim_plug_path = expand('~/.vim/autoload/plug.vim')
-endif
+let vim_plug_path = expand('~/.config/nvim/autoload/plug.vim')
 
 if !filereadable(vim_plug_path)
     echo "Installing Vim-plug..."
     echo ""
-    if using_neovim
-        silent !mkdir -p ~/.config/nvim/autoload
-        silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    else
-        silent !mkdir -p ~/.vim/autoload
-        silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    endif
+    silent !mkdir -p ~/.config/nvim/autoload
+    silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     let vim_plug_just_installed = 1
 endif
 
@@ -56,28 +47,36 @@ call plug#begin("~/.config/nvim/plugged")
 
 " Now the actual plugins:
 
-" commentary
+" python: jupynb binding
+Plug 'hanschen/vim-ipython-cell'
+
+" editor: Folding
+Plug 'tmhedberg/SimpylFold'
+" editor: commentary
 Plug 'tpope/vim-commentary'
-" Indent line
+" editor: Indent line
 Plug 'junegunn/vim-easy-align'
-" Override configs by directory
-Plug 'arielrossanigo/dir-configs-override.vim'
-" Better file browser
+" editor: todo list
+Plug 'fisadev/FixedTaskList.vim'
+
+" util: NERDTree
 Plug 'scrooloose/nerdtree'
-" Class/module browser
+" util: file structure
 Plug 'majutsushi/tagbar'
-" Search results counter
+" util: Index Search redfine /, ?, #, n, N, *
 Plug 'vim-scripts/IndexedSearch'
-" A couple of nice colorschemes
-Plug 'patstockwell/vim-monokai-tasty'
-" Airline
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-" Code and files fuzzy finder
+" util: directory configuration.
+Plug 'arielrossanigo/dir-configs-override.vim'
+" util: fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-" Pending tasks list
-Plug 'fisadev/FixedTaskList.vim'
+
+" appearance: vim-monokai-tasty
+Plug 'patstockwell/vim-monokai-tasty'
+" appearance: Airline
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
 
 " Async autocompletion
 if using_neovim && vim_plug_just_installed
@@ -85,9 +84,9 @@ if using_neovim && vim_plug_just_installed
 else
     Plug 'Shougo/deoplete.nvim'
 endif
-
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
+
 " Python autocompletion
 Plug 'deoplete-plugins/deoplete-jedi'
 " Completion from other opened files
@@ -178,7 +177,6 @@ map <M-Left> :tabp<CR>
 imap <M-Left> <ESC>:tabp<CR>
 
 
-
 " clear empty spaces at the end of lines on save of python files
 autocmd BufWritePre *.py :%s/\s\+$//e
 
@@ -207,28 +205,6 @@ let g:tagbar_autofocus = 1
 map <F2> :TaskList<CR>
 
 
-
-" ============================ FZF ============================
-" file finder mapping
-nmap ,e :Files<CR>
-" tags (symbols) in current file finder mapping
-nmap ,g :BTag<CR>
-" the same, but with the word under the cursor pre filled
-nmap ,wg :execute ":BTag " . expand('<cword>')<CR>
-" tags (symbols) in all files finder mapping
-nmap ,G :Tags<CR>
-" the same, but with the word under the cursor pre filled
-nmap ,wG :execute ":Tags " . expand('<cword>')<CR>
-" general code finder in current file mapping
-nmap ,f :BLines<CR>
-" the same, but with the word under the cursor pre filled
-nmap ,wf :execute ":BLines " . expand('<cword>')<CR>
-" general code finder in all files mapping
-nmap ,F :Lines<CR>
-" the same, but with the word under the cursor pre filled
-nmap ,wF :execute ":Lines " . expand('<cword>')<CR>
-" commands finder mapping
-nmap ,c :Commands<CR>
 
 
 " ========================== Deoplet ==========================
@@ -274,12 +250,12 @@ let g:signify_vcs_list = ['git', 'hg']
 nmap <leader>sn <plug>(signify-next-hunk)
 nmap <leader>sp <plug>(signify-prev-hunk)
 " nicer colors
-highlight DiffAdd           cterm=bold ctermbg=none ctermfg=119
-highlight DiffDelete        cterm=bold ctermbg=none ctermfg=167
-highlight DiffChange        cterm=bold ctermbg=none ctermfg=227
-highlight SignifySignAdd    cterm=bold ctermbg=237  ctermfg=119
-highlight SignifySignDelete cterm=bold ctermbg=237  ctermfg=167
-highlight SignifySignChange cterm=bold ctermbg=237  ctermfg=227
+highlight DiffAdd cterm=bold ctermbg=none ctermfg=119
+highlight DiffDelete cterm=bold ctermbg=none ctermfg=167
+highlight DiffChange cterm=bold ctermbg=none ctermfg=227
+highlight SignifySignAdd cterm=bold ctermbg=237 ctermfg=119
+highlight SignifySignDelete cterm=bold ctermbg=237 ctermfg=167
+highlight SignifySignChange cterm=bold ctermbg=237 ctermfg=227
 
 
 
