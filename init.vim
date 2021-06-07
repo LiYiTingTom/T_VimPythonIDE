@@ -91,6 +91,8 @@ Plug 'mhinz/vim-signify'
 Plug 'sheerun/vim-polyglot'
 " util: Git integration
 Plug 'tpope/vim-fugitive'
+" util: Git tree
+Plug 'rbong/vim-flog'
 " util: Ack code search (requires ack installed in the system)
 Plug 'mileszs/ack.vim'
 
@@ -114,6 +116,8 @@ Plug 'deoplete-plugins/deoplete-jedi'
 " python: jupynb binding
 Plug 'hanschen/vim-ipython-cell'
 " python: jedi goto, ...
+Plug 'jpalardy/vim-slime', { 'for': 'python' }
+Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }
 Plug 'davidhalter/jedi-vim'
 
 call plug#end()
