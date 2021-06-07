@@ -9,6 +9,7 @@ set softtabstop=4
 set shiftwidth=4
 set tabstop=4
 set ai
+set splitright
 
 map <C-j> <C-n>
 map <C-k> <C-p>
@@ -20,7 +21,6 @@ set scrolloff=3
 nnoremap <silent> // :noh<CR>
 " color column
 set colorcolumn=79
-
 
 
 " ======================== easy alian ========================

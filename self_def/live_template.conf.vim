@@ -24,6 +24,17 @@ endfunc
 " implement comment line
 nmap \cl1 :call BeautifulComment("=", 72)<CR>gcc
 nmap \cl2 :call BeautifulComment("-", 72)<CR>gcc
-nmap \cs1 :call BeautifulComment("=", 60)<CR>gcc
-nmap \cs2 :call BeautifulComment("-", 60)<CR>gcc
+nmap \cs1 :call BeautifulComment("=", 36)<CR>gcc
+nmap \cs2 :call BeautifulComment("-", 36)<CR>gcc
 nmap \cdd gcc^diwx$diwx
+
+" ============================ IPython Startup ============================
+command! -nargs=* T vsplit | vertical resize 90 | term <args>
+command! Ip Ipy
+nmap Ipy iipython<CR><C-\><C-n><C-w>h
+
+func! IpythonStartup()
+    :T pipenv shell
+    execute "normal iipython\<CR>\<C-\>\<C-n>\<C-w>h"
+endfunc
+nmap \ipy :call IpythonStartup()<CR>
